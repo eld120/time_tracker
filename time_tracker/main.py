@@ -12,7 +12,7 @@ if sys.platform == "win32":
         import ctypes
 
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
-            "com.opencode.timetracker"
+            "com.open.timetracker"
         )
     except Exception:
         pass
@@ -113,7 +113,7 @@ class TimerCard(ctk.CTkFrame):
 class TimeTrackerApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("Opencode Time Tracker")
+        self.title("Open Time Tracker")
         self.geometry("600x800")
         self.db = DBManager(db_path="storage.db")
         self.timer_cards = []
