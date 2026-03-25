@@ -2,6 +2,8 @@
 
 Minimal multi-client time tracking with a local SQLite database and a CustomTkinter UI.
 
+Basically, I was really tired of a bug within the Mac time app and I needed a way to track more than one client at a time as I might bounce between client tasks on any given day.
+
 ## Quickstart
 
 From the repo root:
