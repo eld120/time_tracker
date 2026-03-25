@@ -7,7 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "customtkinter>=5.2.2",
     "pillow>=10.0.0",
-    "pyobjc-framework-cocoa>=10.0",
+    "pyobjc-framework-cocoa>=10.0; sys_platform == 'darwin'",
 ]
 
 [dependency-groups]
@@ -16,5 +16,3 @@ dev = [
     "ruff>=0.15.7",
     "ty>=0.0.25",
 ]
-
-
