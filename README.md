@@ -13,7 +13,7 @@ uv sync
 uv run time_tracker
 ```
 
-or
+or:
 
 ```bash
 uv run app.py
