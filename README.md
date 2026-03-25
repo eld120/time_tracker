@@ -10,16 +10,13 @@ From the repo root:
 
 ```bash
 uv sync
-uv run app.py
+uv run time_tracker
 ```
 
-That is the main supported launch path.
-
-You can also run:
+or
 
 ```bash
-uv run python app.py
-uv run python -m time_tracker
+uv run app.py
 ```
 
 ## Desktop Shortcut

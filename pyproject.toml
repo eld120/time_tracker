@@ -1,5 +1,5 @@
 [project]
-name = "time-tracker"
+name = "time_tracker"
 version = "0.1.0"
 description = "Multi-client concurrent time tracker"
 readme = "README.md"
