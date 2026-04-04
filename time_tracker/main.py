@@ -1,11 +1,11 @@
 import sys
-from pathlib import Path
 from typing import Any, cast
 
 import customtkinter as ctk
 from PIL import Image, ImageTk
 
 from time_tracker.database import DBManager
+from time_tracker.resources import resource_path
 
 if sys.platform == "win32":
     try:
@@ -22,8 +22,7 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-ASSETS_DIR = ROOT_DIR / "assets"
+ASSETS_DIR = resource_path("assets")
 ICON_PNG = ASSETS_DIR / "icon.png"
 ICON_ICO = ASSETS_DIR / "icon.ico"
 
@@ -115,7 +114,7 @@ class TimeTrackerApp(ctk.CTk):
         super().__init__()
         self.title("Open Time Tracker")
         self.geometry("600x800")
-        self.db = DBManager(db_path="storage.db")
+        self.db = DBManager()
         self.timer_cards = []
         self._icon_ref = None
 

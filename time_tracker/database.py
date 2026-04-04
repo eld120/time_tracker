@@ -1,30 +1,51 @@
+from contextlib import contextmanager
+from pathlib import Path
+
 import sqlite3
 import time
-import os
+
+from .resources import default_db_path
 
 
 class DBManager:
-    def __init__(self, db_path="storage.db"):
-        # Resolve path relative to the project root (where this package is)
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.db_path = os.path.join(base_dir, db_path)
-        self.schema_path = os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), "schema.sql"
-        )
+    def __init__(self, db_path: str | Path | None = None):
+        self.db_path = self._resolve_db_path(db_path)
+        self.schema_path = Path(__file__).resolve().parent / "schema.sql"
         self._init_db()
 
+    def _resolve_db_path(self, db_path: str | Path | None) -> Path:
+        if db_path is None:
+            return default_db_path()
+
+        path = Path(db_path).expanduser()
+        if path.is_absolute():
+            return path
+
+        return Path.cwd() / path
+
     def _init_db(self):
-        # Auto-initialize database if it's new
-        if not os.path.exists(self.db_path):
-            with open(self.schema_path, "r") as f:
-                schema = f.read()
+        self.db_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if not self.schema_path.exists():
+            raise FileNotFoundError(f"Missing schema file: {self.schema_path}")
+
+        if not self.db_path.exists():
+            schema = self.schema_path.read_text(encoding="utf-8")
             with sqlite3.connect(self.db_path) as conn:
                 conn.executescript(schema)
 
+    @contextmanager
     def _get_conn(self):
         conn = sqlite3.connect(self.db_path)
         conn.row_factory = sqlite3.Row
-        return conn
+        try:
+            yield conn
+            conn.commit()
+        except Exception:
+            conn.rollback()
+            raise
+        finally:
+            conn.close()
 
     def get_clients(self):
         with self._get_conn() as conn:
