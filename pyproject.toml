@@ -10,9 +10,16 @@ dependencies = [
     "pyobjc-framework-cocoa>=10.0; sys_platform == 'darwin'",
 ]
 
+[project.scripts]
+time_tracker = "time_tracker.main:main"
+
 [dependency-groups]
 dev = [
+    "pyinstaller>=6.19.0",
     "pytest>=9.0.2",
     "ruff>=0.15.7",
     "ty>=0.0.25",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
