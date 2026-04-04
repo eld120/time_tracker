@@ -21,8 +21,18 @@ uv run app.py
 
 ## Desktop Shortcut
 
-- macOS: create an alias or small shell script that runs `uv run app.py` from `/Users/hub/Sandbox/time_tracker`
-- Windows: create a shortcut or `.bat` file that runs `uv run app.py` from the repo root
+- macOS: create an alias or small shell script that runs `uv run time_tracker` from the repo root
+- Windows: create a shortcut or `.bat` file that runs `uv run time_tracker` from the repo root
+
+## Build Executables
+
+Build on each target platform with PyInstaller. The build script bundles the app assets and schema, uses a single-file executable on Windows, and a normal app bundle on macOS.
+
+```bash
+uv run python scripts/build_executable.py
+```
+
+Outputs are written to `dist/`.
 
 ## Icon Files
 
@@ -40,6 +50,7 @@ uv run ty check time_tracker tests app.py scripts
 
 ## Notes
 
-- timer state is stored in `storage.db`
+- timer state is stored in your user data directory as `storage.db`
+- set `TIME_TRACKER_DATA_DIR` if you want to override that location
 - totals are tracked from timestamps plus accumulated seconds to avoid drift
 - subcontractor minutes are added manually through the UI
